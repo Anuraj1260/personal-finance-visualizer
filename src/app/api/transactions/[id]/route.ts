@@ -26,14 +26,14 @@ export async function PATCH(
   }
 }
 
-// ✅ DELETE: Delete transaction
+
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectMongo();
-    const id = params.id;
+    const { id } = await context.params;
 
     const deleted = await Transaction.findByIdAndDelete(id);
 

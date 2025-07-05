@@ -1,10 +1,21 @@
 // src/models/Budget.ts
-import mongoose from "mongoose";
+import mongoose, { Schema, model, models } from "mongoose";
 
-const BudgetSchema = new mongoose.Schema({
+export interface IBudget {
+  category: string;
+  amount: number;
+  month: string;
+}
+
+const BudgetSchema = new Schema<IBudget>({
   category: { type: String, required: true },
   amount: { type: Number, required: true },
-  month: { type: String, required: true }, // Format: YYYY-MM
+  month: { type: String, required: true },
 });
 
-export default mongoose.models.Budget || mongoose.model("Budget", BudgetSchema);
+const Budget =
+  (globalThis as any).BudgetModel || model<IBudget>("Budget", BudgetSchema);
+
+(globalThis as any).BudgetModel = Budget;
+
+export default Budget;

@@ -1,5 +1,5 @@
 // src/models/Transaction.ts
-import mongoose, { Schema, Model, models } from "mongoose";
+import mongoose, { Schema, model, models, Model } from "mongoose";
 
 export interface ITransaction {
   description: string;
@@ -18,10 +18,12 @@ const TransactionSchema = new Schema<ITransaction>(
   { timestamps: true }
 );
 
-// ✅ SAFE GLOBAL STORAGE for hot reload
+// ✅ Properly type global cache to avoid `any`
+type TransactionModelType = Model<ITransaction>;
+
 const Transaction =
   (globalThis as any).TransactionModel ||
-  mongoose.model<ITransaction>("Transaction", TransactionSchema);
+  model<ITransaction>("Transaction", TransactionSchema);
 
 (globalThis as any).TransactionModel = Transaction;
 

@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { connectMongo } from "@/lib/mongodb";
 import Transaction from "@/models/Transaction";
 import { ITransaction } from "@/models/Transaction";
-
+import mongoose from "mongoose";
 
 // ✅ GET: Fetch all transactions
 export async function GET() {
@@ -13,14 +13,14 @@ export async function GET() {
     const transactions = await Transaction.find().sort({ date: -1 });
 
     return NextResponse.json(
-  transactions.map((txn: ITransaction & { _id: any }) => ({
-    _id: txn._id.toString(),
-    description: txn.description,
-    amount: txn.amount,
-    date: txn.date.toISOString(),
-    category: txn.category,
-  }))
-);
+      transactions.map((txn: ITransaction & { _id: mongoose.Types.ObjectId }) => ({
+        _id: txn._id.toString(),
+        description: txn.description,
+        amount: txn.amount,
+        date: txn.date.toISOString(),
+        category: txn.category,
+      }))
+    );
   } catch (error) {
     console.error("❌ GET /api/transactions error:", error);
     return NextResponse.json(

@@ -11,10 +11,12 @@ import SummaryCards from "@/components/SummaryCards";
 import BudgetForm from "@/components/BudgetForm";
 import BudgetComparisonChart from "@/components/BudgetComparisonChart";
 import SpendingInsights from "@/components/SpendingInsights";
+import { Budget } from "@/types/budget";
+
 
 export default function Home() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [budgets, setBudgets] = useState<any[]>([]);
+  const [budgets, setBudgets] = useState<Budget[]>([]);
   const [month, setMonth] = useState(new Date().toISOString().slice(0, 7));
 
   useEffect(() => {

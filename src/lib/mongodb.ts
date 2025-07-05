@@ -1,29 +1,37 @@
 // src/lib/mongodb.ts
-import mongoose from "mongoose";
+import mongoose, { Connection } from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI!;
+const MONGODB_URI = process.env.MONGODB_URI;
 
-// TEMP: Debug line to verify if env is loaded
 console.log("✅ MONGODB_URI =", MONGODB_URI);
 
 if (!MONGODB_URI) {
   throw new Error("❌ Please define the MONGODB_URI environment variable inside .env.local");
 }
 
-let cached = (global as any).mongoose || { conn: null, promise: null };
+interface MongooseGlobalCache {
+  conn: Connection | null;
+  promise: Promise<Connection> | null;
+}
 
-export const connectMongo = async () => {
-  if (cached.conn) return cached.conn;
+// Use globalThis to persist the cache across hot reloads
+const globalWithMongoose = globalThis as typeof globalThis & {
+  mongoose: MongooseGlobalCache;
+};
 
-  if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGODB_URI, {
-      dbName: "finance",
-      bufferCommands: false,
-    });
+if (!globalWithMongoose.mongoose) {
+  globalWithMongoose.mongoose = { conn: null, promise: null };
+}
+
+export const connectMongo = async (): Promise<Connection> => {
+  if (globalWithMongoose.mongoose.conn) {
+    return globalWithMongoose.mongoose.conn;
   }
 
-  cached.conn = await cached.promise;
-  (global as any).mongoose = cached;
+  if (!globalWithMongoose.mongoose.promise) {
+    globalWithMongoose.mongoose.promise = mongoose.connect(MONGODB_URI).then((mongooseInstance) => mongooseInstance.connection);
+  }
 
-  return cached.conn;
+  globalWithMongoose.mongoose.conn = await globalWithMongoose.mongoose.promise;
+  return globalWithMongoose.mongoose.conn;
 };

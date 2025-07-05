@@ -11,7 +11,7 @@ export async function getTransactions(): Promise<TransactionType[]> {
     const transactions = await Transaction.find().sort({ date: -1 });
     console.log("🔍 Fetched transactions:", transactions);
 
-    return transactions.map((txn: any) => ({
+    return transactions.map((txn: TransactionType & { _id: any; date: Date }) => ({
       _id: txn._id.toString(),
       description: txn.description,
       amount: txn.amount,

@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📊 Personal Finance Visualizer
 
-## Getting Started
+A simple and responsive web application to help users **track personal finances, categorize expenses, and manage budgets**, with intuitive visualizations and a clean UI.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🌐 Live Demo
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+🔗 [View App on Vercel](https://personal-finance-visualizer-smoky-two.vercel.app/)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📁 GitHub Repository
 
-## Learn More
+🔗 [GitHub Repo](https://github.com/Anuraj1260/personal-finance-visualizer)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ✅ Features by Stage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 🟩 Stage 1 – Basic Transaction Tracking
+- Add/Edit/Delete transactions (amount, date, description)
+- Transaction list view
+- Monthly expenses bar chart (Recharts)
+- Basic form validation and error states
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 🟨 Stage 2 – Categories
+- All Stage 1 features +
+- Predefined categories (e.g., Food, Travel, Rent)
+- Pie chart for category-wise expense breakdown
+- Dashboard with summary cards:
+  - Total expenses
+  - Most recent transactions
+  - Category breakdown
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+### 🟥 Stage 3 – Budgeting
+- All Stage 2 features +
+- Set monthly budgets for each category
+- Budget vs. Actual comparison chart
+- Simple spending insights (e.g., over-budget alerts)
+
+---
+
+## 💻 Tech Stack
+
+- **Framework**: Next.js 15 (App Router)
+- **Frontend**: React, TypeScript, Tailwind CSS
+- **UI**: shadcn/ui (Radix UI)
+- **Data Visualization**: Recharts
+- **Database**: MongoDB (via Mongoose)
+- **Deployment**: Vercel
+
+---
+
+## ⚙️ Setup Instructions
+
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/Anuraj1260/personal-finance-visualizer.git
+   cd personal-finance-visualizer
+
+2. Install dependencies:
+   npm install
+3. Create a .env.local file:
+   MONGODB_URI=your_mongodb_connection_string
+4. Run the app locally:
+   

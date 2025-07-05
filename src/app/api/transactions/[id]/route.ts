@@ -1,13 +1,20 @@
 // src/app/api/transactions/[id]/route.ts
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { connectMongo } from "@/lib/mongodb";
 import Transaction from "@/models/Transaction";
 
-// ✅ PATCH: Update a transaction
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+// Required type from Next.js App Router
+interface Params {
+  params: {
+    id: string;
+  };
+}
+
+// ✅ PATCH: Update transaction
+export async function PATCH(req: NextRequest, context: Params) {
   try {
     await connectMongo();
-    const id = params.id;
+    const id = context.params.id;
     const data = await req.json();
 
     const updated = await Transaction.findByIdAndUpdate(id, data, { new: true });
@@ -23,11 +30,11 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   }
 }
 
-// ✅ DELETE: Remove a transaction
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+// ✅ DELETE: Delete transaction
+export async function DELETE(req: NextRequest, context: Params) {
   try {
     await connectMongo();
-    const id = params.id;
+    const id = context.params.id;
 
     const deleted = await Transaction.findByIdAndDelete(id);
 
@@ -35,7 +42,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
       return NextResponse.json({ error: "Transaction not found." }, { status: 404 });
     }
 
-    return NextResponse.json({ message: "Transaction deleted." });
+    return NextResponse.json({ message: "Transaction deleted successfully." });
   } catch (err) {
     console.error("DELETE error:", err);
     return NextResponse.json({ error: "Failed to delete transaction" }, { status: 500 });

@@ -3,18 +3,14 @@ import { NextResponse, NextRequest } from "next/server";
 import { connectMongo } from "@/lib/mongodb";
 import Transaction from "@/models/Transaction";
 
-// Required type from Next.js App Router
-interface Params {
-  params: {
-    id: string;
-  };
-}
-
 // ✅ PATCH: Update transaction
-export async function PATCH(req: NextRequest, context: Params) {
+export async function PATCH(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
     await connectMongo();
-    const id = context.params.id;
+    const id = params.id;
     const data = await req.json();
 
     const updated = await Transaction.findByIdAndUpdate(id, data, { new: true });
@@ -31,10 +27,13 @@ export async function PATCH(req: NextRequest, context: Params) {
 }
 
 // ✅ DELETE: Delete transaction
-export async function DELETE(req: NextRequest, context: Params) {
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
     await connectMongo();
-    const id = context.params.id;
+    const id = params.id;
 
     const deleted = await Transaction.findByIdAndDelete(id);
 

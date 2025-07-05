@@ -5,11 +5,11 @@ import Transaction from "@/models/Transaction";
 // ✅ PATCH: Update a transaction
 export async function PATCH(
   req: NextRequest,
-  context: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectMongo();
-    const id = context.params.id;
+    const { id } = await context.params; // ✅ await the params
     const data = await req.json();
 
     const updated = await Transaction.findByIdAndUpdate(id, data, { new: true });
@@ -28,11 +28,11 @@ export async function PATCH(
 // ✅ DELETE: Delete a transaction
 export async function DELETE(
   req: NextRequest,
-  context: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectMongo();
-    const id = context.params.id;
+    const { id } = await context.params; // ✅ await the params
 
     const deleted = await Transaction.findByIdAndDelete(id);
 

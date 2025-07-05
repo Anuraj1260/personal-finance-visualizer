@@ -1,9 +1,6 @@
 # Node modules
 /node_modules
 
-# Testing coverage
-/coverage
-
 # Build outputs
 /.next
 /out
@@ -16,19 +13,29 @@
 .env.test.local
 .env.production.local
 
-# Log files
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# OS system files
+# Testing coverage
+/coverage
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# IDEs and Editors
+.vscode/
+.idea/
+
+# OS-specific files
 .DS_Store
 Thumbs.db
 
-# TypeScript cache
-*.tsbuildinfo
-next-env.d.ts
+# Vim/Swap files
+*.swp
 
 # Yarn Plug'n'Play
 .pnp.*
@@ -38,17 +45,8 @@ next-env.d.ts
 !.yarn/releases
 !.yarn/versions
 
-# SSL keys or certificates
+# SSL certificates
 *.pem
 
 # Vercel deployment folder
-.vercel
-
-# IDEs and editors (optional)
-.vscode
-.idea
-
-# Mac specific
-*.swp
-
 .vercel

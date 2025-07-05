@@ -1,16 +1,12 @@
-// src/app/api/transactions/[id]/route.ts
-import { NextResponse, NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { connectMongo } from "@/lib/mongodb";
 import Transaction from "@/models/Transaction";
 
 // ✅ PATCH: Update transaction
-export async function PATCH(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PATCH(req: NextRequest, context: { params: { id: string } }) {
   try {
     await connectMongo();
-    const id = params.id;
+    const id = context.params.id;
     const data = await req.json();
 
     const updated = await Transaction.findByIdAndUpdate(id, data, { new: true });
@@ -26,14 +22,11 @@ export async function PATCH(
   }
 }
 
-
-export async function DELETE(
-  req: NextRequest,
-  context: { params: Promise<{ id: string }> }
-) {
+// ✅ DELETE: Delete transaction
+export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
   try {
     await connectMongo();
-    const { id } = await context.params;
+    const id = context.params.id;
 
     const deleted = await Transaction.findByIdAndDelete(id);
 

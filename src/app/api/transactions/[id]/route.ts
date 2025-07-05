@@ -4,10 +4,10 @@ import { connectMongo } from "@/lib/mongodb";
 import Transaction from "@/models/Transaction";
 
 // ✅ PATCH: Update a transaction
-export async function PATCH(req: Request, context: { params: { id: string } }) {
+export async function PATCH(req: Request, { params }: { params: { id: string } }) {
   try {
     await connectMongo();
-    const id = context.params.id;
+    const id = params.id;
     const data = await req.json();
 
     const updated = await Transaction.findByIdAndUpdate(id, data, { new: true });
@@ -24,10 +24,10 @@ export async function PATCH(req: Request, context: { params: { id: string } }) {
 }
 
 // ✅ DELETE: Remove a transaction
-export async function DELETE(req: Request, context: { params: { id: string } }) {
+export async function DELETE(req: Request, { params }: { params: { id: string } }) {
   try {
     await connectMongo();
-    const id = context.params.id;
+    const id = params.id;
 
     const deleted = await Transaction.findByIdAndDelete(id);
 

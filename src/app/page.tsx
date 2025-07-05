@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getTransactions } from "@/lib/actions";
 import { Transaction } from "@/types/transaction";
 
 import TransactionForm from "@/components/TransactionForm";

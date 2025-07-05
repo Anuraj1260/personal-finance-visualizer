@@ -5,7 +5,7 @@ import { Budget } from "@/types/budget";
 
 interface Props {
   transactions: Transaction[];
-  budgets: any[];
+  budgets: Budget[];
   selectedMonth: string;
 }
 
@@ -20,11 +20,9 @@ export default function SpendingInsights({ transactions, budgets, selectedMonth 
     spending[txn.category] = (spending[txn.category] || 0) + txn.amount;
   }
 
-  const overBudget = Array.isArray(budgets)
-    ? budgets
-        .filter((b) => b.month === selectedMonth)
-        .filter((b) => spending[b.category] > b.amount)
-    : [];
+  const overBudget = budgets
+    .filter((b) => b.month === selectedMonth)
+    .filter((b) => spending[b.category] > b.amount);
 
   if (overBudget.length === 0) return null;
 
